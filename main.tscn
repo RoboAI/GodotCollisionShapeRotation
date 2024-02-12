@@ -1,0 +1,87 @@
+[gd_scene load_steps=12 format=3 uid="uid://catxio7y6dd8w"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_1ag1j"]
+[ext_resource type="Script" path="res://player.gd" id="2_m30jq"]
+[ext_resource type="Script" path="res://area2d_column.gd" id="4_nlq4v"]
+
+[sub_resource type="Gradient" id="Gradient_rgkla"]
+colors = PackedColorArray(0, 0.235358, 0.551848, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_c4gxk"]
+gradient = SubResource("Gradient_rgkla")
+width = 15
+
+[sub_resource type="Gradient" id="Gradient_11pu1"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0.235358, 0.551848, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jc5eo"]
+gradient = SubResource("Gradient_11pu1")
+width = 15
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uglq8"]
+size = Vector2(128, 127)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1easf"]
+load_path = "res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sdkwo"]
+height = 197.29
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_s7cny"]
+height = 197.29
+
+[node name="main" type="Node2D"]
+script = ExtResource("1_1ag1j")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = 300.0
+offset_top = 158.0
+offset_right = 344.0
+offset_bottom = 589.0
+texture = SubResource("GradientTexture1D_c4gxk")
+script = ExtResource("4_nlq4v")
+
+[node name="Point1" type="Node2D" parent="TextureRect"]
+position = Vector2(20, 116)
+
+[node name="Point2" type="Node2D" parent="TextureRect"]
+position = Vector2(20, 317)
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+offset_left = 822.0
+offset_top = 249.0
+offset_right = 866.0
+offset_bottom = 680.0
+texture = SubResource("GradientTexture1D_jc5eo")
+
+[node name="Point3" type="Node2D" parent="TextureRect2"]
+position = Vector2(20, 116)
+
+[node name="Point4" type="Node2D" parent="TextureRect2"]
+position = Vector2(20, 317)
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(485, 78)
+script = ExtResource("2_m30jq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_uglq8")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+texture = SubResource("CompressedTexture2D_1easf")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(186, 220)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CapsuleShape2D_sdkwo")
+
+[node name="Area2D2" type="Area2D" parent="."]
+position = Vector2(186, 479)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+shape = SubResource("CapsuleShape2D_s7cny")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Area2D2" to="." method="_on_area_2d_body_entered"]
